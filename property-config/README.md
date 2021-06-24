@@ -2,8 +2,8 @@
 # @Value
 GreetingControllerV1 inject values from properties file
 
-    curl http://localhost:8080/greeting
-    curl http://localhost:8080/greeting/welcome
+    curl http://localhost:8080/greeting/v1
+    curl http://localhost:8080/greeting/v1/welcome
 
 
 problem:
@@ -32,11 +32,26 @@ Enable property scan
 
 Test:
     
-    curl http://localhost:8080/greeting
-    curl http://localhost:8080/greeting/welcome
+    curl http://localhost:8080/greeting/v2
+    curl http://localhost:8080/greeting/v2/welcome
 
 If greeting.name not defined in properties, the app still can start. 
 http://localhost:8080/greeting returns empty.
+
+# Using Profiles to configure environment specific configuration
+Profile is a key to identify an environment, eg: prod, dev
+
+application-dev.properties is for dev profile
+
+Two ways to enable the dev profile
+* via vm option: -Dspring.profiles.active=dev
+* add spring.profiles.active=dev to application.properties
+
+Test:
+
+    curl http://localhost:8080/greeting/v2
+    returns: hao dev
+    
 
 # Check properties from actuator/env
 Enable actuator

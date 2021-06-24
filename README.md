@@ -15,4 +15,5 @@ Regardless of database or platform, Spring Data’s goal is to make the develope
 ## Property Configuration
 * @Value
 * @ConfigurationProperties
+* Using Profiles to configure environment specific configuration
 * Check properties from actuator/env
