@@ -1,8 +1,9 @@
 # SpringBoot Notes
 
-## JPA
+## Data
 * h2
 * mysql
+* redis
 * mongodb
 * Neo4j (Graph db)
 

@@ -25,6 +25,7 @@
     <modules>
         <module>simple-h2-jpa</module>
         <module>property-config</module>
+        <module>mysql-jpa</module>
     </modules>
 
 
