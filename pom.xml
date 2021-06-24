@@ -29,6 +29,7 @@
         <module>mongodb-demo</module>
         <module>redis-demo</module>
         <module>neo4j-demo</module>
+        <module>live-load</module>
     </modules>
 
 
