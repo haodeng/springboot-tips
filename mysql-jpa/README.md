@@ -27,5 +27,6 @@ It’s simple to override this behavior with the following property settings:
     spring.jpa.hibernate.ddl-auto=none
 
 Test:
-    
+     
+     docker start mysql
      curl http://localhost:8080/posts
