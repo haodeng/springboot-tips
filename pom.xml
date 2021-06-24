@@ -24,6 +24,7 @@
 
     <modules>
         <module>simple-h2-jpa</module>
+        <module>property-config</module>
     </modules>
 
 
