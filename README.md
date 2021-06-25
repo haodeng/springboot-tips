@@ -20,3 +20,12 @@ Regardless of database or platform, Spring Data’s goal is to make the develope
 
 ## Dev tools
 * Live load
+
+## Reactive
+Reactive should be end to end solution.
+
+If interactions between the user’s browser and the backend application are nonblocking but the app has to wait for a blocking interaction with the database, the result is a blocking system.
+
+* WebFlux
+* Reactive Data Access (via r2dbc h2)
+* Reactive MongoDb

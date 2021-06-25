@@ -30,6 +30,7 @@
         <module>redis-demo</module>
         <module>neo4j-demo</module>
         <module>live-load</module>
+        <module>reactive-demo</module>
     </modules>
 
 
