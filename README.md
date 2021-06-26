@@ -29,3 +29,7 @@ If interactions between the user’s browser and the backend application are non
 * WebFlux
 * Reactive Data Access (via r2dbc h2)
 * Reactive MongoDb
+
+## Testing
+* Unit testing (Controllers and Repository)
+* Integration test
