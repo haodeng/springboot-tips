@@ -33,3 +33,19 @@ If interactions between the user’s browser and the backend application are non
 ## Testing
 * Unit testing (Controllers and Repository)
 * Integration test
+
+## Security
+A big topic
+* Form based authentication, authorization
+* OpenId connect authentication, Oauth2 authorization (Via 3rd party authorization server, eg: okta)
+* Resource server
+* Authorization server (Still an experiment project)
+
+checkout: https://github.com/haodeng/spring-security-tips
+
+## Deploy
+* Spring Boot Executable JAR
+* "Fully Executable" Spring Boot JAR
+* Build image (docker should be running)
+* publish image to docker hub
+* Build & publish image without docker (jib plugin)

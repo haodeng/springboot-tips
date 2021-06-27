@@ -32,6 +32,7 @@
         <module>live-load</module>
         <module>reactive-demo</module>
         <module>testing-application</module>
+        <module>deploy-demo</module>
     </modules>
 
 
