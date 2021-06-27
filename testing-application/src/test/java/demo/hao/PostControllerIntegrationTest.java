@@ -3,46 +3,40 @@ package demo.hao;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.web.reactive.server.WebTestClient;
-
-import java.util.Map;
-import java.util.stream.StreamSupport;
+import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 
 @SpringBootTest(classes = {TestDemoApplication.class},
         webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class PostControllerIntegrationTest {
     @Autowired
-    private WebTestClient client;
+    TestRestTemplate restTemplate;
 
     // When started, DataLoader already loads 3 posts
 
     @Test
     void getPosts() {
+        ResponseEntity<String> response = restTemplate
+                .exchange("/posts",
+                        HttpMethod.GET,
+                        null,
+                        String.class);
 
-        Iterable iterable = client.get()
-                .uri("/posts")
-                .exchange()
-                .expectStatus().isOk()
-                .expectBody(Iterable.class)
-                .returnResult()
-                .getResponseBody();
-
-        Assertions.assertEquals(3, StreamSupport.stream(iterable.spliterator(), false).count());
+        String expected = "[{\"id\":1,\"name\":\"test 1\"},{\"id\":2,\"name\":\"test 2\"},{\"id\":3,\"name\":\"test 3\"}]";
+        Assertions.assertEquals(expected, response.getBody());
     }
 
     @Test
     void getPostById() {
-        Map postMap = client.get()
-                .uri("/posts/1")
-                .exchange()
-                .expectStatus().isOk()
-                .expectBody(Map.class)
-                .returnResult()
-                .getResponseBody();
+        ResponseEntity<String> response = restTemplate
+                .exchange("/posts/1",
+                        HttpMethod.GET,
+                        null,
+                        String.class);
 
-        Assertions.assertEquals(1, postMap.get("id"));
-        Assertions.assertEquals("test 1", postMap.get("name"));
+        String expected = "{\"id\":1,\"name\":\"test 1\"}";
+        Assertions.assertEquals(expected, response.getBody());
     }
 }

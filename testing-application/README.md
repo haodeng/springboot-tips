@@ -7,24 +7,34 @@ Reuse h2 jpa project for testing
 			<scope>test</scope>
 		</dependency>
 
-## Unit test PostController (Reactive)
+## Unit test PostController
 Mock PostService
     
     @MockBean
     private PostService postService;
 
+
+## Test reactively
+PostControllerReactiveTest
+
 Instruct the test instance to load the PositionController
 
     @WebFluxTest(controllers = {PostController.class})
+    
+    @Autowired
+    private WebTestClient client;
+
+## Test imperatively
+PostControllerTest
 
 If using imperative way of testing, use:
 
+    @WebMvcTest(value = PostController.class)
+
     @Autowired
     private MockMvc mockMvc;
-    
-    @WebMvcTest(value = PostController.class)
-    
 
+    
 ## Unit test Repository
 Use
 
@@ -47,15 +57,24 @@ Use
 * @AutoConfigureRestDocs
 * @WebServiceClientTest
 
-## Integration test PostController (Reactive)
+## Integration test PostController
 No need to mock PostService, run app as test server and make real http calls
 
     @SpringBootTest(classes = {TestDemoApplication.class},
             webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-    class PostControllerIntegrationTest {
+    
+### Reactive
+PostControllerIntegrationReactiveTest
+
         @Autowired
         private WebTestClient client;
         ...
 
+### Imperative
+PostControllerIntegrationTest
+
 For imperative testing, use TestRestTemplate
+
+    @Autowired
+    TestRestTemplate restTemplate;
      

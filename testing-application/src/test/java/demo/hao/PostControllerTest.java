@@ -2,60 +2,52 @@ package demo.hao;
 
 import com.sun.tools.javac.util.List;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.web.reactive.server.WebTestClient;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import java.util.Iterator;
-import java.util.Map;
 import java.util.Optional;
 import java.util.stream.StreamSupport;
 
-@WebFluxTest(controllers = {PostController.class})
+@WebMvcTest(controllers = {PostController.class})
 class PostControllerTest {
     @Autowired
-    private WebTestClient client;
+    private MockMvc mockMvc;
 
     @MockBean
     private PostService postService;
 
     @Test
-    void getPosts() {
+    void getPosts() throws Exception {
         Mockito.when(postService.getPosts())
-                .thenReturn(List.of(new Post(1L, "test1"),
-                        new Post(2L, "test2"),
-                        new Post(3L, "test3"),
-                        new Post(4L, "test4")));
+                .thenReturn(List.of(new Post(1L, "test 1"),
+                        new Post(2L, "test 2"),
+                        new Post(3L, "test 3")));
 
-        Iterable iterable = client.get()
-                .uri("/posts")
-                .exchange()
-                .expectStatus().isOk()
-                .expectBody(Iterable.class)
-                .returnResult()
-                .getResponseBody();
+        String response = mockMvc
+                .perform(MockMvcRequestBuilders.get("/posts"))
+                .andReturn()
+                .getResponse().getContentAsString();
 
-        Assertions.assertEquals(4, StreamSupport.stream(iterable.spliterator(), false).count());
+        String expected = "[{\"id\":1,\"name\":\"test 1\"},{\"id\":2,\"name\":\"test 2\"},{\"id\":3,\"name\":\"test 3\"}]";
+        Assertions.assertEquals(expected, response);
     }
 
     @Test
-    void getPostById() {
+    void getPostById() throws Exception {
         Mockito.when(postService.getPostById(1L))
-                .thenReturn(Optional.of(new Post(1L, "test1")));
+                .thenReturn(Optional.of(new Post(1L, "test 1")));
 
-        Map postMap = client.get()
-                .uri("/posts/1")
-                .exchange()
-                .expectStatus().isOk()
-                .expectBody(Map.class)
-                .returnResult()
-                .getResponseBody();
+        String response = mockMvc
+                .perform(MockMvcRequestBuilders.get("/posts/1"))
+                .andReturn()
+                .getResponse().getContentAsString();
 
-        Assertions.assertEquals(1, postMap.get("id"));
-        Assertions.assertEquals("test1", postMap.get("name"));
+        String expected = "{\"id\":1,\"name\":\"test 1\"}";
+        Assertions.assertEquals(expected, response);
     }
 }
