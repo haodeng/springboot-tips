@@ -104,4 +104,10 @@ Build and publish to docker hub
     
     mvn compile jib:build
     
+## Inspect a image
 
+    brew install buildpacks/tap/pack
+    
+    pack inspect-image haodeng/deploy-demo:latest
+    
+    

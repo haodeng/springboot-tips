@@ -49,3 +49,4 @@ checkout: https://github.com/haodeng/spring-security-tips
 * Build image (docker should be running)
 * publish image to docker hub
 * Build & publish image without docker (jib plugin)
+* Inspect a image
