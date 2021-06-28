@@ -92,3 +92,20 @@ http://localhost:8080/actuator/env
               "value": "test"
             }
           }
+          
+# Internationalization (i18n)
+Spring boot provides excellent support for message localization using it’s auto-configuration feature. All we have to do is provide locale specific resource bundle properties and MessageSource is automatically configured for us.
+
+Presence of resource bundle with name messages.properties or name configured using spring.messages.basename property.
+
+Resource bundle messages:
+    
+    message.properties
+    message_da.properties
+    message_es.properties
+
+Test:
+
+    curl -H "Accept-Language:da-DK" http://localhost:8080/locale-hi
+    
+    curl -H "Accept-Language:es-ES" http://localhost:8080/locale-hi

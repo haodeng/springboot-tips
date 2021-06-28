@@ -17,6 +17,7 @@ Regardless of database or platform, Spring Data’s goal is to make the develope
 * @ConfigurationProperties
 * Using Profiles to configure environment specific configuration
 * Check properties from actuator/env
+* Internationalization (i18n)
 
 ## Dev tools
 * Live load
