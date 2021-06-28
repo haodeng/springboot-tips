@@ -3,6 +3,7 @@
 ## Data
 * h2
 * mysql
+* Customize hikari connection (demo via mysql-jpa)
 * redis
 * mongodb
 * Neo4j (Graph db)

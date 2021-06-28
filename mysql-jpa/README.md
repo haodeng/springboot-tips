@@ -30,3 +30,10 @@ Test:
      
      docker start mysql
      curl http://localhost:8080/posts
+
+# Customize hikari
+By default boot already using Hikari, just need customize it, eg:
+
+    spring.datasource.hikari.connection-timeout=50000
+    spring.datasource.hikari.idle-timeout=300000
+    spring.datasource.hikari.max-lifetime=900000
