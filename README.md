@@ -53,3 +53,6 @@ checkout: https://github.com/haodeng/spring-security-tips
 * publish image to docker hub
 * Build & publish image without docker (jib plugin)
 * Inspect a image
+
+## Other
+* Spring retry

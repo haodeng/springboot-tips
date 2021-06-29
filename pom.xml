@@ -29,6 +29,7 @@
         <module>testing-application</module>
         <module>deploy-demo</module>
         <module>dataaccess-demos</module>
+        <module>retry-demo</module>
     </modules>
 
 
