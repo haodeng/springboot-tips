@@ -1,9 +1,10 @@
 # SpringBoot Notes
 
-## Data
+## Data access
 * h2
 * mysql
 * Customize hikari connection (demo via mysql-jpa)
+* Multi jpa datasources
 * redis
 * mongodb
 * Neo4j (Graph db)
