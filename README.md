@@ -54,6 +54,12 @@ checkout: https://github.com/haodeng/spring-security-tips
 * Build & publish image without docker (jib plugin)
 * Inspect a image
 
+## Logging
+* Customize console log
+* Inject logger via Lombok
+* Config logging for active profile
+* Logging to multiple log files
+
 ## Other
 * Spring retry
 * Scheduling

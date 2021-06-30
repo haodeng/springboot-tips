@@ -31,6 +31,7 @@
         <module>dataaccess-demos</module>
         <module>retry-demo</module>
         <module>scheduling-demo</module>
+        <module>logging-demo</module>
     </modules>
 
 
