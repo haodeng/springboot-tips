@@ -9,6 +9,7 @@
 * redis
 * mongodb
 * Neo4j (Graph db)
+* Hibernate second-level cache
 
 Spring Data’s stated mission is “to provide a familiar and consistent, Spring-based programming model for data access while still retaining the special traits of the underlying data store.” 
 
@@ -53,13 +54,17 @@ checkout: https://github.com/haodeng/spring-security-tips
 * Build image (docker should be running)
 * publish image to docker hub
 * Build & publish image without docker (jib plugin)
-* Inspect a image
+* Inspect an image
 
 ## Logging
 * Customize console log
 * Inject logger via Lombok
 * Config logging for active profile
 * Logging to multiple log files
+
+## Caching
+* service layer cache (demo via spring default simple caching)
+* ehcache3 cache
 
 ## Other
 * Spring retry

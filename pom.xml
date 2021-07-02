@@ -32,6 +32,7 @@
         <module>retry-demo</module>
         <module>scheduling-demo</module>
         <module>logging-demo</module>
+        <module>caching-demos</module>
     </modules>
 
 
