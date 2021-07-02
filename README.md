@@ -4,6 +4,7 @@
 * h2
 * mysql
 * Customize hikari connection (demo via mysql-jpa)
+* pagination and sorting (mysql-jpa)
 * Multi jpa datasources
 * redis
 * mongodb

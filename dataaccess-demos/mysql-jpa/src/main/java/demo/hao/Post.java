@@ -17,5 +17,9 @@ class Post {
     @GeneratedValue
     private Long id;
     private String name;
+
+    public Post(String name) {
+        this.name = name;
+    }
 }
 

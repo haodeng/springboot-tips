@@ -37,3 +37,22 @@ By default boot already using Hikari, just need customize it, eg:
     spring.datasource.hikari.connection-timeout=50000
     spring.datasource.hikari.idle-timeout=300000
     spring.datasource.hikari.max-lifetime=900000
+
+## Paging and sorting
+Use PagingAndSortingRepository which extends CrudRepository
+
+Page number values start with 0
+
+A Pagable need to put to find:
+
+    postRepository.findAll(
+                    PageRequest.of(pageNo, pageSize, Sort.by(sortBy)));
+
+Sort asc or desc:
+
+    Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by("name").descending());
+
+Demo:
+
+    curl "http://localhost:8080/posts/paged?pageNo=1&pageSize=5"
+    curl "http://localhost:8080/posts/paged?pageNo=10&pageSize=5&sortBy=name"

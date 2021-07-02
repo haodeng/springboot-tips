@@ -1,5 +1,5 @@
 package demo.hao;
 
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.PagingAndSortingRepository;
 
-interface PostRepository extends CrudRepository<Post, String> {}
+interface PostRepository extends PagingAndSortingRepository<Post, String> {}
