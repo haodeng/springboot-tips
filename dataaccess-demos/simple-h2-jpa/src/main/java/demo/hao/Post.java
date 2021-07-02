@@ -2,7 +2,6 @@ package demo.hao;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import java.util.UUID;
 
 @Entity
 class Post {
@@ -16,10 +15,6 @@ class Post {
     public Post(String id, String name) {
         this.id = id;
         this.name = name;
-    }
-
-    public Post(String name) {
-        this(UUID.randomUUID().toString(), name);
     }
 
     public String getId() {

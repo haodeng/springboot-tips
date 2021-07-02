@@ -16,9 +16,9 @@ class DataLoader {
     @PostConstruct
     private void loadData() {
         postRepository.saveAll(List.of(
-                new Post("test 1"),
-                new Post("test 2"),
-                new Post("test 3")
+                new Post("1", "test 1"),
+                new Post("2", "test 2"),
+                new Post("3", "test 3")
         ));
     }
 }

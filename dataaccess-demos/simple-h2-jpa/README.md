@@ -10,4 +10,21 @@ The H2 database driver scope runtime indicates that it will be present in the ru
         <scope>runtime</scope>
     </dependency>
 
+## Transactional
+
+    @GetMapping("/batch-update-failed")
+    @Transactional
+    public void demoTransactional() {
+    
+Demo
+
+    curl http://localhost:8080/posts
+    
+    # exception, all updates are rolled back
+    curl http://localhost:8080/posts/batch-update-failed
+    
+    # no records should be updated
+    curl http://localhost:8080/posts
+
+
      
