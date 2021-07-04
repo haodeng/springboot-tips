@@ -34,10 +34,24 @@ order created in orders db, inventory decreased in inventory db
 
 Simulate an exception in OrderService
 
+    @Transactional(rollbackFor = Exception.class)
+    public Orders createOrder(Orders order, String inventoryName) {
+        Optional<Inventory> inventoryOptional = inventoryRepository.findByName(inventoryName);
+        if (inventoryOptional.isPresent()) {
+            Inventory inventory = inventoryOptional.get();
+            inventory.setQuantities(inventory.getQuantities() - 1);
+
+            inventoryRepository.save(inventory);
+        }
+
+        Orders myOrder = orderRepository.save(order);
         if (order.getName().equals("failed")) {
             // Simulate a exception
             int i = 1/0;
         }
+
+        return myOrder;
+    }
 
 and
 
