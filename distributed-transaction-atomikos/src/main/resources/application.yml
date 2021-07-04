@@ -1,0 +1,40 @@
+spring:
+  application:
+    name: distributed-transaction-demo
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+        #format_sql: true
+      javax:
+        persistence:
+          transactionType: JTA
+  jta:
+    enabled: true
+    atomikos:
+      datasource:
+        ds1:
+          xa-properties.url: jdbc:h2:mem:inventory
+          xa-properties.user: sa
+          xa-properties.password:
+          xa-data-source-class-name: org.h2.jdbcx.JdbcDataSource
+          unique-resource-name: ds1
+          uniqueResourceName: ds1
+          max-pool-size: 10
+          min-pool-size: 3
+          max-lifetime: 20000
+          borrow-connection-timeout: 10000
+        ds2:
+          xa-properties.url: jdbc:h2:mem:orders
+          xa-properties.user: sa
+          xa-properties.password:
+          xa-data-source-class-name: org.h2.jdbcx.JdbcDataSource
+          unique-resource-name: ds2
+          uniqueResourceName: ds2
+          max-pool-size: 10
+          min-pool-size: 3
+          max-lifetime: 20000
+          borrow-connection-timeout: 10000

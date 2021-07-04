@@ -33,6 +33,7 @@
         <module>scheduling-demo</module>
         <module>logging-demo</module>
         <module>caching-demos</module>
+        <module>distributed-transaction-atomikos</module>
     </modules>
 
 

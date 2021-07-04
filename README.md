@@ -16,6 +16,8 @@ Spring Data’s stated mission is “to provide a familiar and consistent, Sprin
 
 Regardless of database or platform, Spring Data’s goal is to make the developer’s use of data as simple and as powerful as humanly possible.
 
+## Distributed Transaction
+* use Atomikos
 
 ## Property Configuration
 * @Value
