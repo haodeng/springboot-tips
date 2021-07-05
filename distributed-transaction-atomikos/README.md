@@ -8,7 +8,12 @@
 Config jta transaction manager and multiple datasource
 
 Check JtaTransactionManagerConfig, DataSource1Config and DataSource2Config
-        
+      
+Add to Transactional to OrdersService.createOrder
+
+    @Transactional(rollbackFor = Exception.class)
+    public Orders createOrder(Orders order, String inventoryName) {
+              
 ## Demo happy scenario
 
     curl http://localhost:8080/orders/inventory-status
@@ -37,17 +42,16 @@ Simulate an exception in OrderService
     @Transactional(rollbackFor = Exception.class)
     public Orders createOrder(Orders order, String inventoryName) {
         Optional<Inventory> inventoryOptional = inventoryRepository.findByName(inventoryName);
-        if (inventoryOptional.isPresent()) {
-            Inventory inventory = inventoryOptional.get();
-            inventory.setQuantities(inventory.getQuantities() - 1);
+        Inventory inventory = inventoryOptional.orElseThrow(
+                () -> new IllegalArgumentException("Unable to find inventory " + inventoryName));
 
-            inventoryRepository.save(inventory);
-        }
+        inventory.setQuantities(inventory.getQuantities() - 1);
+        inventoryRepository.save(inventory);
 
         Orders myOrder = orderRepository.save(order);
         if (order.getName().equals("failed")) {
             // Simulate a exception
-            int i = 1/0;
+            throw new RuntimeException("Simulate exception ignore pls");
         }
 
         return myOrder;
