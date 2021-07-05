@@ -10,7 +10,8 @@
 * redis
 * mongodb
 * Neo4j (Graph db)
-* Hibernate second-level cache
+* Hibernate related:
+  * second-level cache
 
 Spring Data’s stated mission is “to provide a familiar and consistent, Spring-based programming model for data access while still retaining the special traits of the underlying data store.” 
 
