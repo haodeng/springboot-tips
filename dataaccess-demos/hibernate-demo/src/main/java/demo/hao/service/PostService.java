@@ -42,6 +42,14 @@ public class PostService {
                 .collect(Collectors.toList());
     }
 
+    public List<PostDto> findPostsByUserEmail(String email) {
+        log.debug("Request to findPostsByUserEmail");
+        return this.postRepository.findPostsByUserEmail(email)
+                .stream()
+                .map(PostService::mapToDto)
+                .collect(Collectors.toList());
+    }
+
     @Transactional(readOnly = true)
     public PostDto findById(Long id) {
         log.debug("Request to get Post : {}", id);

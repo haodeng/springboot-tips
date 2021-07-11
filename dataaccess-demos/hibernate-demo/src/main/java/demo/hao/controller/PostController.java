@@ -19,6 +19,11 @@ class PostController {
         return this.postService.findAll();
     }
 
+    @GetMapping("/search")
+    public List<PostDto> findPostsByUserEmail(@RequestParam String email) {
+        return this.postService.findPostsByUserEmail(email);
+    }
+
     @GetMapping("/{id}")
     public PostDto findById(@PathVariable Long id) {
         return this.postService.findById(id);
