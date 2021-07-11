@@ -12,6 +12,7 @@
 * Neo4j (Graph db)
 * Hibernate related:
   * second-level cache
+  * solve N+1 issue
 
 Spring Data’s stated mission is “to provide a familiar and consistent, Spring-based programming model for data access while still retaining the special traits of the underlying data store.” 
 

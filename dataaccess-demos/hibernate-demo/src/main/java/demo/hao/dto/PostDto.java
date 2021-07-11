@@ -12,7 +12,7 @@ import java.util.Set;
 public class PostDto {
     private Long id;
     private String name;
-//    private Long categoryId;
+    private Long categoryId;
 
     private UserDto user;
     private Set<CommentDto> comments;

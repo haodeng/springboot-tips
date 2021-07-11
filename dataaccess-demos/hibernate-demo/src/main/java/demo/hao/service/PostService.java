@@ -25,8 +25,7 @@ public class PostService {
             return new PostDto(
                     post.getId(),
                     post.getName(),
-//                    post.getCategory().getId(),
-//                    CategoryService.mapToDto(post.getCategory()),
+                    post.getCategory().getId(),
                     UserService.mapToDto(post.getUser()),
                     post.getComments().stream().map(CommentService::mapToDto).collect(Collectors.toSet())
             );
