@@ -25,3 +25,5 @@ values (6, 11),
        (6, 12),
        (6, 13),
        (7, 14);
+
+update hibernate_sequence set next_val=14;
