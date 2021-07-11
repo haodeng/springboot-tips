@@ -1,51 +1,37 @@
 package demo.hao.controller;
 
 
-import demo.hao.dao.PostRepository;
-import demo.hao.model.Post;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import demo.hao.dto.PostDto;
+import demo.hao.service.PostService;
+import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
+import java.util.List;
 
 @RestController
+@AllArgsConstructor
 @RequestMapping("/posts")
 class PostController {
-    private final PostRepository postRepository;
-
-    public PostController(PostRepository postRepository) {
-        this.postRepository = postRepository;
-    }
+    private final PostService postService;
 
     @GetMapping
-    Iterable<Post> getPosts() {
-        return postRepository.findAll();
+    public List<PostDto> findAll() {
+        return this.postService.findAll();
     }
 
     @GetMapping("/{id}")
-    Optional<Post> getPostById(@PathVariable Long id) {
-        return postRepository.findById(id);
+    public PostDto findById(@PathVariable Long id) {
+        return this.postService.findById(id);
     }
 
     @PostMapping
-    Post postPost(@RequestBody Post Post) {
-        return postRepository.save(Post);
-    }
-
-    @PutMapping("/{id}")
-    ResponseEntity<Post> putPost(@PathVariable Long id,
-                                 @RequestBody Post Post) {
-
-        return (postRepository.existsById(id))
-                ? new ResponseEntity<>(postRepository.save(Post), HttpStatus.OK)
-                : new ResponseEntity<>(postRepository.save(Post), HttpStatus.CREATED);
+    public PostDto create(@RequestBody PostDto postDto) {
+        return this.postService.create(postDto);
     }
 
     @DeleteMapping("/{id}")
-    void deletePost(@PathVariable Long id) {
-        postRepository.deleteById(id);
+    public void delete(@PathVariable Long id) {
+        this.postService.delete(id);
     }
-
 }
 
