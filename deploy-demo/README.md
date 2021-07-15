@@ -103,6 +103,12 @@ Build and publish to docker hub
     docker login
     
     mvn compile jib:build
+
+Jib also can build your image directly to a Docker daemon. This uses the docker command line tool and requires that you have Docker available on your PATH.
+
+
+    mvn compile jib:dockerBuild
+
     
 ## Inspect a image
 
