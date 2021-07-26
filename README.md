@@ -43,6 +43,8 @@ If interactions between the user’s browser and the backend application are non
 ## Testing
 * Unit testing (Controllers and Repository)
 * Integration test
+* Integration test with real db
+* Mocking
 
 ## Security
 A big topic
