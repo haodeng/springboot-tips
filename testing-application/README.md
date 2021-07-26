@@ -77,4 +77,20 @@ For imperative testing, use TestRestTemplate
 
     @Autowired
     TestRestTemplate restTemplate;
-     
+
+## Mocking
+Springboot auto import Mockito, two ways to mock
+
+### BDDMockito (recommended, more readable)
+
+    BDDMockito.given(postService.getPosts())
+                    .willReturn(List.of(new Post(1L, "test 1"),
+                            new Post(2L, "test 2"),
+                            new Post(3L, "test 3")));
+
+### Mockito
+
+    Mockito.when(postService.getPosts())
+                    .thenReturn(List.of(new Post(1L, "test 1"),
+                            new Post(2L, "test 2"),
+                            new Post(3L, "test 3")));    

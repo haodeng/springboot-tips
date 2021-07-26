@@ -3,6 +3,7 @@ package demo.hao;
 import com.sun.tools.javac.util.List;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
+import org.mockito.BDDMockito;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -27,6 +28,19 @@ class PostControllerTest {
     void getPosts() throws Exception {
         Mockito.when(postService.getPosts())
                 .thenReturn(List.of(new Post(1L, "test 1"),
+                        new Post(2L, "test 2"),
+                        new Post(3L, "test 3")));
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/posts"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[*].id", Matchers.containsInAnyOrder(1, 2, 3)))
+                .andExpect(jsonPath("$[*].name", Matchers.containsInAnyOrder("test 1", "test 2", "test 3")));
+    }
+
+    @Test
+    void getPostsInBDDWay() throws Exception {
+        BDDMockito.given(postService.getPosts())
+                .willReturn(List.of(new Post(1L, "test 1"),
                         new Post(2L, "test 2"),
                         new Post(3L, "test 3")));
 
