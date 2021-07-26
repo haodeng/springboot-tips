@@ -78,6 +78,48 @@ For imperative testing, use TestRestTemplate
     @Autowired
     TestRestTemplate restTemplate;
 
+### Integration test with real db
+h2 is the default test db, but sometimes the sql works different in other dbs, for example adding or minus date function.
+We want to test with a real db.
+By far, the best solution is test container.
+
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>mysql</artifactId>
+            <version>1.15.3</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>1.15.3</version>
+            <scope>test</scope>
+        </dependency>
+
+Create mysql container in integration test
+
+    @Testcontainers
+    @SpringBootTest(classes = {TestDemoApplication.class},
+            webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+    class PostControllerIntegrationWithRealMysqlDBTest {
+        @Autowired
+        TestRestTemplate restTemplate;
+   
+        private static final DockerImageName MYSQL_80_IMAGE = DockerImageName.parse("mysql:8.0.24");
+    
+        @Container
+        public static MySQLContainer<?> mysql = new MySQLContainer<>(MYSQL_80_IMAGE);
+    
+        @DynamicPropertySource
+        static void registerPostgresqlProperties(DynamicPropertyRegistry registry) {
+            registry.add("spring.jpa.database-platform", MySQL8Dialect.class::getName);
+            registry.add("spring.datasource.url", () -> mysql.getJdbcUrl());
+            registry.add("spring.datasource.username", () -> mysql.getUsername());
+            registry.add("spring.datasource.password", () -> mysql.getPassword());
+        }
+        
+ 
+        
 ## Mocking
 Springboot auto import Mockito, two ways to mock
 
