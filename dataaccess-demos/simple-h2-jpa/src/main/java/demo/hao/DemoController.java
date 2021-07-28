@@ -1,6 +1,7 @@
 package demo.hao;
 
 
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -44,6 +45,36 @@ class DemoController {
     @DeleteMapping("/{id}")
     void deletePost(@PathVariable String id) {
         postRepository.deleteById(id);
+    }
+
+    @GetMapping("/search/name/{name}")
+    Iterable<Post> searchByName(@PathVariable String name) {
+        return postRepository.findByName(name);
+    }
+
+    @GetMapping("/search/name/{name}/ignorecase")
+    Iterable<Post> searchByNameIgnoreCase(@PathVariable String name) {
+        return postRepository.findByNameIgnoreCase(name);
+    }
+
+    @GetMapping("/search/name/{name}/sort")
+    Iterable<Post> searchByNameSorted(@PathVariable String name) {
+        return postRepository.findByName(name, Sort.by(Sort.Direction.DESC, "name"));
+    }
+
+    @GetMapping("/search/partialname/{partialName}")
+    Iterable<Post> searchByNameContaining(@PathVariable String partialName) {
+        return postRepository.findByNameContaining(partialName);
+    }
+
+    @GetMapping("/search/partialname/{partialName}/ignorecase")
+    Iterable<Post> searchByNameContainingIgnoreCase(@PathVariable String partialName) {
+        return postRepository.findByNameIgnoreCaseContaining(partialName);
+    }
+
+    @GetMapping("/search/partialname/{partialName}/sort")
+    Iterable<Post> searchByNameSortDesc(@PathVariable String partialName) {
+        return postRepository.findByNameContaining(partialName, Sort.by(Sort.Direction.DESC, "name"));
     }
 
     @GetMapping("/batch-update-failed")

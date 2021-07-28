@@ -10,6 +10,20 @@ The H2 database driver scope runtime indicates that it will be present in the ru
         <scope>runtime</scope>
     </dependency>
 
+## More queries
+findBy<Property name>
+
+findBy<Property name>|IgnoreCase|Containing
+
+
+        Iterable<Post> findByName(String name);
+        Iterable<Post> findByNameIgnoreCase(String name);
+        Iterable<Post> findByName(String name, Sort sort);
+    
+        Iterable<Post> findByNameContaining(String partialName);
+        Iterable<Post> findByNameIgnoreCaseContaining(String partialName);
+        Iterable<Post> findByNameContaining(String partialName, Sort sort);
+        
 ## Transactional
 
     @GetMapping("/batch-update-failed")
@@ -25,6 +39,16 @@ Demo
     
     # no records should be updated
     curl http://localhost:8080/posts
+    
+    curl http://localhost:8080/posts/search/name/test%201
+    [{"id":"1","name":"test 1"}]
+    
+    curl http://localhost:8080/posts/search/partialname/test
+    [{"id":"1","name":"test 1"},{"id":"2","name":"test 2"},{"id":"3","name":"test 3"}]
+    
+    curl http://localhost:8080/posts/search/partialname/Test/ignorecase
+    [{"id":"1","name":"test 1"},{"id":"2","name":"test 2"},{"id":"3","name":"test 3"}]
+
 
 
      
