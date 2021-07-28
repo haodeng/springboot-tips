@@ -9,7 +9,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/posts")
@@ -26,8 +28,8 @@ class DemoController {
     }
 
     @GetMapping("/{id}")
-    Optional<Post> getPostById(@PathVariable Long id) {
-        return postRepository.findById(id);
+    Optional<PostDto> getPostById(@PathVariable Long id) {
+        return postRepository.findById(id).map(PostDto::new);
     }
 
     @PostMapping
@@ -50,33 +52,52 @@ class DemoController {
     }
 
     @GetMapping("/search/name/{name}")
-    Iterable<Post> searchByName(@PathVariable String name) {
-        return postRepository.findByName(name);
+    List<PostDto> searchByName(@PathVariable String name) {
+        return postRepository.findByName(name)
+                .stream()
+                .map(PostDto::new)
+                .collect(Collectors.toList());
     }
 
     @GetMapping("/search/name/{name}/ignorecase")
-    Iterable<Post> searchByNameIgnoreCase(@PathVariable String name) {
-        return postRepository.findByNameIgnoreCase(name);
+    List<PostDto> searchByNameIgnoreCase(@PathVariable String name) {
+        return postRepository.findByNameIgnoreCase(name)
+                .stream()
+                .map(PostDto::new)
+                .collect(Collectors.toList());
     }
 
     @GetMapping("/search/name/{name}/sort")
-    Iterable<Post> searchByNameSorted(@PathVariable String name) {
-        return postRepository.findByName(name, Sort.by(Sort.Direction.DESC, "name"));
+    List<PostDto> searchByNameSorted(@PathVariable String name) {
+        return postRepository.findByName(name, Sort.by(Sort.Direction.DESC, "name"))
+                .stream()
+                .map(PostDto::new)
+                .collect(Collectors.toList());
     }
 
     @GetMapping("/search/partialname/{partialName}")
-    Iterable<Post> searchByNameContaining(@PathVariable String partialName) {
-        return postRepository.findByNameContaining(partialName);
+    List<PostDto> searchByNameContaining(@PathVariable String partialName) {
+        return postRepository.findByNameContaining(partialName)
+                .stream()
+                .map(PostDto::new)
+                .collect(Collectors.toList());
     }
 
     @GetMapping("/search/partialname/{partialName}/ignorecase")
-    Iterable<Post> searchByNameContainingIgnoreCase(@PathVariable String partialName) {
-        return postRepository.findByNameIgnoreCaseContaining(partialName);
+    List<PostDto> searchByNameContainingIgnoreCase(@PathVariable String partialName) {
+        return postRepository.findByNameIgnoreCaseContaining(partialName)
+                .stream()
+                .map(PostDto::new)
+                .collect(Collectors.toList());
     }
 
     @GetMapping("/search/partialname/{partialName}/sort")
-    Iterable<Post> searchByNameSortDesc(@PathVariable String partialName) {
-        return postRepository.findByNameContaining(partialName, Sort.by(Sort.Direction.DESC, "name"));
+    List<PostDto> searchByNameSortDesc(@PathVariable String partialName) {
+        return postRepository.findByNameContaining(partialName,
+                Sort.by(Sort.Direction.DESC, "name"))
+                .stream()
+                .map(PostDto::new)
+                .collect(Collectors.toList());
     }
 
     /**
@@ -85,22 +106,28 @@ class DemoController {
      * /search/filtered?category=java
      */
     @GetMapping("/search/filtered")
-    Iterable<Post> search(@RequestParam(required = false) String name,
+    List<PostDto> search(@RequestParam(required = false) String name,
                           @RequestParam(required = false) String category) {
         Post probe = new Post(name, category);
         //default, ExampleMatcher.matchingAll()
         Example<Post> example = Example.of(probe);
 
-        return postRepository.findAll(example);
+        return postRepository.findAll(example)
+                .stream()
+                .map(PostDto::new)
+                .collect(Collectors.toList());
     }
 
     @GetMapping("/search/filtered_any")
-    Iterable<Post> searchMatchAny(@RequestParam(required = false) String name,
+    List<PostDto> searchMatchAny(@RequestParam(required = false) String name,
                                   @RequestParam(required = false) String category) {
         Post probe = new Post(name, category);
         Example<Post> example = Example.of(probe, ExampleMatcher.matchingAny());
 
-        return postRepository.findAll(example);
+        return postRepository.findAll(example)
+                .stream()
+                .map(PostDto::new)
+                .collect(Collectors.toList());
     }
 
     @GetMapping("/batch-update-failed")
