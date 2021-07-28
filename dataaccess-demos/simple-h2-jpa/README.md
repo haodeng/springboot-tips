@@ -10,11 +10,12 @@ The H2 database driver scope runtime indicates that it will be present in the ru
         <scope>runtime</scope>
     </dependency>
 
-## More queries
-findBy<Property name>
+## More queries 
+In PostRepository add:
 
-findBy<Property name>|IgnoreCase|Containing
+findBy{Property name}
 
+findBy{Property name}|IgnoreCase|Containing
 
         Iterable<Post> findByName(String name);
         Iterable<Post> findByNameIgnoreCase(String name);
@@ -23,6 +24,24 @@ findBy<Property name>|IgnoreCase|Containing
         Iterable<Post> findByNameContaining(String partialName);
         Iterable<Post> findByNameIgnoreCaseContaining(String partialName);
         Iterable<Post> findByNameContaining(String partialName, Sort sort);
+
+## Filter, search by params
+Use "Example"
+
+        /**
+         * /search/filtered?name=test%201&category=java
+         * /search/filtered?name=test%201
+         * /search/filtered?category=java
+         */
+        @GetMapping("/search/filtered")
+        Iterable<Post> search(@RequestParam(required = false) String name,
+                              @RequestParam(required = false) String category) {
+            Post probe = new Post(name, category);
+            //default, ExampleMatcher.matchingAll()
+            Example<Post> example = Example.of(probe);
+    
+            return postRepository.findAll(example);
+        }
         
 ## Transactional
 

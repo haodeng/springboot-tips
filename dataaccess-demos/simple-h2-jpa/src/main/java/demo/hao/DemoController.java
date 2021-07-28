@@ -1,6 +1,8 @@
 package demo.hao;
 
 
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +26,7 @@ class DemoController {
     }
 
     @GetMapping("/{id}")
-    Optional<Post> getPostById(@PathVariable String id) {
+    Optional<Post> getPostById(@PathVariable Long id) {
         return postRepository.findById(id);
     }
 
@@ -34,7 +36,7 @@ class DemoController {
     }
 
     @PutMapping("/{id}")
-    ResponseEntity<Post> putPost(@PathVariable String id,
+    ResponseEntity<Post> putPost(@PathVariable Long id,
                                  @RequestBody Post Post) {
 
         return (postRepository.existsById(id))
@@ -43,7 +45,7 @@ class DemoController {
     }
 
     @DeleteMapping("/{id}")
-    void deletePost(@PathVariable String id) {
+    void deletePost(@PathVariable Long id) {
         postRepository.deleteById(id);
     }
 
@@ -77,11 +79,35 @@ class DemoController {
         return postRepository.findByNameContaining(partialName, Sort.by(Sort.Direction.DESC, "name"));
     }
 
+    /**
+     * /search/filtered?name=test%201&category=java
+     * /search/filtered?name=test%201
+     * /search/filtered?category=java
+     */
+    @GetMapping("/search/filtered")
+    Iterable<Post> search(@RequestParam(required = false) String name,
+                          @RequestParam(required = false) String category) {
+        Post probe = new Post(name, category);
+        //default, ExampleMatcher.matchingAll()
+        Example<Post> example = Example.of(probe);
+
+        return postRepository.findAll(example);
+    }
+
+    @GetMapping("/search/filtered_any")
+    Iterable<Post> searchMatchAny(@RequestParam(required = false) String name,
+                                  @RequestParam(required = false) String category) {
+        Post probe = new Post(name, category);
+        Example<Post> example = Example.of(probe, ExampleMatcher.matchingAny());
+
+        return postRepository.findAll(example);
+    }
+
     @GetMapping("/batch-update-failed")
     @Transactional
     public void demoTransactional() {
         getPosts().forEach(post -> {
-            if (post.getId().equals("3")) {
+            if (post.getId().equals(3)) {
                 throw new RuntimeException("demo batch update failed, pls ignore");
             }
 

@@ -1,28 +1,26 @@
 package demo.hao;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity
 class Post {
-    @Id
-    private String id;
+    @Id @GeneratedValue
+    private Long id;
     private String name;
+    private String category;
 
     public Post() {
     }
 
-    public Post(String id, String name) {
-        this.id = id;
+    public Post(String name, String category) {
         this.name = name;
+        this.category = category;
     }
 
-    public String getId() {
+    public Long getId() {
         return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public String getName() {
@@ -31,6 +29,14 @@ class Post {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 }
 

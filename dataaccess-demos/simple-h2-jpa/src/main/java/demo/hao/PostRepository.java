@@ -3,7 +3,7 @@ package demo.hao;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-interface PostRepository extends JpaRepository<Post, String> {
+interface PostRepository extends JpaRepository<Post, Long> {
 
     Iterable<Post> findByName(String name);
     Iterable<Post> findByNameIgnoreCase(String name);
