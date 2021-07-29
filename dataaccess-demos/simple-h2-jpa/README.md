@@ -10,7 +10,7 @@ The H2 database driver scope runtime indicates that it will be present in the ru
         <scope>runtime</scope>
     </dependency>
 
-## More queries 
+## More queries (Query creation by method names and keywords)
 In PostRepository add:
 
 findBy{Property name}
@@ -86,5 +86,31 @@ Demo
     {"name":"test 2","id":2,"description":"spring:test 2","category":"spring"}
 
 
+## Auditing
+Add:
 
-     
+    @EnableJpaAuditing
+    
+In post:
+
+    @EntityListeners(AuditingEntityListener.class)
+
+    @CreatedDate
+    //updatable flag helps to avoid the override of
+    //column's value during the update operation
+    @Column(updatable = false)
+    private Instant createdDate;
+
+    @LastModifiedDate
+    private Instant lastModifiedDate;
+
+Demo
+
+    curl "http://localhost:8080/posts/3"
+    {"category":"java","createdDate":"2021-07-29T20:51:12.488Z","lastModifiedDate":"2021-07-29T20:51:12.488Z","name":"test 3","id":3,"description":"java:test 3"}
+    
+    curl -X PUT -H "Content-Type: application/json" -d '{"id":3,"name":"hao", "category":"java"}' http://localhost:8080/posts/3
+    
+    # expect lastModified updated
+    curl "http://localhost:8080/posts/3" 
+    {"category":"java","createdDate":"2021-07-29T20:51:12.488Z","lastModifiedDate":"2021-07-29T20:52:02.435Z","name":"hao","id":3,"description":"java:hao"}

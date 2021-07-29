@@ -1,5 +1,7 @@
 package demo.hao;
 
+import java.time.Instant;
+
 class PostDto {
     private final Post post;
 
@@ -21,6 +23,14 @@ class PostDto {
 
     public String getDescription() {
         return getCategory() + ":" + getName();
+    }
+
+    public Instant getCreatedDate() {
+        return post.getCreatedDate();
+    }
+
+    public Instant getLastModifiedDate() {
+        return post.getLastModifiedDate();
     }
 }
 

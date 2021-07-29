@@ -2,7 +2,12 @@
 
 ## Data access
 * h2
+  * Query creation by method names and keywords
+  * Query and native query
+  * Auditing
 * mysql
+  * paging & sorting
+  * Customize hikari
 * Customize hikari connection (demo via mysql-jpa)
 * pagination and sorting (mysql-jpa)
 * transactional (mysql-jpa)

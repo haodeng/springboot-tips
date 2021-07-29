@@ -39,11 +39,11 @@ class DemoController {
 
     @PutMapping("/{id}")
     ResponseEntity<Post> putPost(@PathVariable Long id,
-                                 @RequestBody Post Post) {
+                                 @RequestBody Post post) {
 
         return (postRepository.existsById(id))
-                ? new ResponseEntity<>(postRepository.save(Post), HttpStatus.OK)
-                : new ResponseEntity<>(postRepository.save(Post), HttpStatus.CREATED);
+                ? new ResponseEntity<>(postRepository.save(post), HttpStatus.OK)
+                : new ResponseEntity<>(postRepository.save(post), HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{id}")
