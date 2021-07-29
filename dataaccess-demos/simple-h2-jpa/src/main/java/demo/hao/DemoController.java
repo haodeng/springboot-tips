@@ -140,6 +140,13 @@ class DemoController {
         return postRepository.findByNameNativeQuery(name).map(PostDto::new);
     }
 
+    @PutMapping("name/{id}")
+    ResponseEntity<Post> setPostNameById(@PathVariable Long id,
+                                         @RequestBody String name) {
+        postRepository.setPostNameById(name, id);
+        return new ResponseEntity<>(postRepository.findById(id).get(), HttpStatus.OK);
+    }
+
     @GetMapping("/batch-update-failed")
     @Transactional
     public void demoTransactional() {

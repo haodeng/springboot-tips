@@ -27,11 +27,17 @@ findBy{Property name}|IgnoreCase|Containing
 
 ## Query and Native query
 
-    @Query("select p from Post p where p.name = ?1")
+        @Query("select p from Post p where p.name = ?1")
         Optional<Post> findByNameQuery(String name);
     
         @Query(value = "SELECT * FROM POST WHERE NAME = ?1", nativeQuery = true)
         Optional<Post> findByNameNativeQuery(String name);
+        
+        // Modifying Queries
+        @Transactional
+        @Modifying
+        @Query("update Post p set p.name = ?1 where p.id = ?2")
+        int setPostNameById(String name, Long postId);
         
 ## Filter, search by params
 Use "Example"
