@@ -130,6 +130,16 @@ class DemoController {
                 .collect(Collectors.toList());
     }
 
+    @GetMapping("/name_query/{name}")
+    Optional<PostDto> getPostByNameQuery(@PathVariable String name) {
+        return postRepository.findByNameQuery(name).map(PostDto::new);
+    }
+
+    @GetMapping("/name_nativequery/{name}")
+    Optional<PostDto> getPostByNameNativeQuery(@PathVariable String name) {
+        return postRepository.findByNameNativeQuery(name).map(PostDto::new);
+    }
+
     @GetMapping("/batch-update-failed")
     @Transactional
     public void demoTransactional() {

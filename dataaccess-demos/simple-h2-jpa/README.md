@@ -25,6 +25,14 @@ findBy{Property name}|IgnoreCase|Containing
         Iterable<Post> findByNameIgnoreCaseContaining(String partialName);
         Iterable<Post> findByNameContaining(String partialName, Sort sort);
 
+## Query and Native query
+
+    @Query("select p from Post p where p.name = ?1")
+        Optional<Post> findByNameQuery(String name);
+    
+        @Query(value = "SELECT * FROM POST WHERE NAME = ?1", nativeQuery = true)
+        Optional<Post> findByNameNativeQuery(String name);
+        
 ## Filter, search by params
 Use "Example"
 
@@ -67,6 +75,9 @@ Demo
     
     curl http://localhost:8080/posts/search/partialname/Test/ignorecase
     [{"id":"1","name":"test 1"},{"id":"2","name":"test 2"},{"id":"3","name":"test 3"}]
+    
+    curl "http://localhost:8080/posts/name_nativequery/test%202"
+    {"name":"test 2","id":2,"description":"spring:test 2","category":"spring"}
 
 
 

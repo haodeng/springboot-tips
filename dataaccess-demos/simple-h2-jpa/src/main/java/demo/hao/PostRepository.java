@@ -2,8 +2,10 @@ package demo.hao;
 
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
+import java.util.Optional;
 
 interface PostRepository extends JpaRepository<Post, Long> {
 
@@ -14,4 +16,10 @@ interface PostRepository extends JpaRepository<Post, Long> {
     List<Post> findByNameContaining(String partialName);
     List<Post> findByNameIgnoreCaseContaining(String partialName);
     List<Post> findByNameContaining(String partialName, Sort sort);
+
+    @Query("select p from Post p where p.name = ?1")
+    Optional<Post> findByNameQuery(String name);
+
+    @Query(value = "SELECT * FROM POST WHERE NAME = ?1", nativeQuery = true)
+    Optional<Post> findByNameNativeQuery(String name);
 }
