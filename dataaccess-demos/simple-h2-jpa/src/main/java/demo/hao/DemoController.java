@@ -23,8 +23,11 @@ class DemoController {
     }
 
     @GetMapping
-    Iterable<Post> getPosts() {
-        return postRepository.findAll();
+    List<PostDto> getPosts() {
+        return postRepository.findAll()
+                .stream()
+                .map(dao -> AppUtils.daoToDto(dao))
+                .collect(Collectors.toList());
     }
 
     @GetMapping("/{id}")
@@ -38,12 +41,11 @@ class DemoController {
     }
 
     @PutMapping("/{id}")
-    ResponseEntity<Post> putPost(@PathVariable Long id,
-                                 @RequestBody Post post) {
+    ResponseEntity<Post> putPost(@PathVariable Long id, @RequestBody PostDto post) {
 
         return (postRepository.existsById(id))
-                ? new ResponseEntity<>(postRepository.save(post), HttpStatus.OK)
-                : new ResponseEntity<>(postRepository.save(post), HttpStatus.CREATED);
+                ? new ResponseEntity<>(postRepository.save(AppUtils.dtoToDao(post)), HttpStatus.OK)
+                : new ResponseEntity<>(postRepository.save(AppUtils.dtoToDao(post)), HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{id}")
@@ -107,7 +109,7 @@ class DemoController {
      */
     @GetMapping("/search/filtered")
     List<PostDto> search(@RequestParam(required = false) String name,
-                          @RequestParam(required = false) String category) {
+                         @RequestParam(required = false) String category) {
         Post probe = new Post(name, category);
         //default, ExampleMatcher.matchingAll()
         Example<Post> example = Example.of(probe);
@@ -120,7 +122,7 @@ class DemoController {
 
     @GetMapping("/search/filtered_any")
     List<PostDto> searchMatchAny(@RequestParam(required = false) String name,
-                                  @RequestParam(required = false) String category) {
+                                 @RequestParam(required = false) String category) {
         Post probe = new Post(name, category);
         Example<Post> example = Example.of(probe, ExampleMatcher.matchingAny());
 
@@ -141,16 +143,15 @@ class DemoController {
     }
 
     @PutMapping("name/{id}")
-    ResponseEntity<Post> setPostNameById(@PathVariable Long id,
-                                         @RequestBody String name) {
+    ResponseEntity<PostDto> setPostNameById(@PathVariable Long id, @RequestBody String name) {
         postRepository.setPostNameById(name, id);
-        return new ResponseEntity<>(postRepository.findById(id).get(), HttpStatus.OK);
+        return new ResponseEntity<>(AppUtils.daoToDto(postRepository.getById(id)), HttpStatus.OK);
     }
 
     @GetMapping("/batch-update-failed")
     @Transactional
     public void demoTransactional() {
-        getPosts().forEach(post -> {
+        getPosts().stream().map(dto -> AppUtils.dtoToDao(dto)).forEach(post -> {
             if (post.getId().equals(3)) {
                 throw new RuntimeException("demo batch update failed, pls ignore");
             }
