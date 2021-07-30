@@ -29,12 +29,12 @@ class DemoController {
 
     @GetMapping("/{id}")
     Optional<PostDto> getPostById(@PathVariable Long id) {
-        return postRepository.findById(id).map(PostDto::new);
+        return AppUtils.daoToDto(postRepository.findById(id));
     }
 
     @PostMapping
-    Post postPost(@RequestBody Post Post) {
-        return postRepository.save(Post);
+    Post postPost(@RequestBody PostDto postDto) {
+        return postRepository.save(AppUtils.dtoToDao(postDto));
     }
 
     @PutMapping("/{id}")
@@ -55,7 +55,7 @@ class DemoController {
     List<PostDto> searchByName(@PathVariable String name) {
         return postRepository.findByName(name)
                 .stream()
-                .map(PostDto::new)
+                .map(dao -> AppUtils.daoToDto(dao))
                 .collect(Collectors.toList());
     }
 
@@ -63,7 +63,7 @@ class DemoController {
     List<PostDto> searchByNameIgnoreCase(@PathVariable String name) {
         return postRepository.findByNameIgnoreCase(name)
                 .stream()
-                .map(PostDto::new)
+                .map(dao -> AppUtils.daoToDto(dao))
                 .collect(Collectors.toList());
     }
 
@@ -71,7 +71,7 @@ class DemoController {
     List<PostDto> searchByNameSorted(@PathVariable String name) {
         return postRepository.findByName(name, Sort.by(Sort.Direction.DESC, "name"))
                 .stream()
-                .map(PostDto::new)
+                .map(dao -> AppUtils.daoToDto(dao))
                 .collect(Collectors.toList());
     }
 
@@ -79,7 +79,7 @@ class DemoController {
     List<PostDto> searchByNameContaining(@PathVariable String partialName) {
         return postRepository.findByNameContaining(partialName)
                 .stream()
-                .map(PostDto::new)
+                .map(dao -> AppUtils.daoToDto(dao))
                 .collect(Collectors.toList());
     }
 
@@ -87,7 +87,7 @@ class DemoController {
     List<PostDto> searchByNameContainingIgnoreCase(@PathVariable String partialName) {
         return postRepository.findByNameIgnoreCaseContaining(partialName)
                 .stream()
-                .map(PostDto::new)
+                .map(dao -> AppUtils.daoToDto(dao))
                 .collect(Collectors.toList());
     }
 
@@ -96,7 +96,7 @@ class DemoController {
         return postRepository.findByNameContaining(partialName,
                 Sort.by(Sort.Direction.DESC, "name"))
                 .stream()
-                .map(PostDto::new)
+                .map(dao -> AppUtils.daoToDto(dao))
                 .collect(Collectors.toList());
     }
 
@@ -114,7 +114,7 @@ class DemoController {
 
         return postRepository.findAll(example)
                 .stream()
-                .map(PostDto::new)
+                .map(dao -> AppUtils.daoToDto(dao))
                 .collect(Collectors.toList());
     }
 
@@ -126,18 +126,18 @@ class DemoController {
 
         return postRepository.findAll(example)
                 .stream()
-                .map(PostDto::new)
+                .map(dao -> AppUtils.daoToDto(dao))
                 .collect(Collectors.toList());
     }
 
     @GetMapping("/name_query/{name}")
     Optional<PostDto> getPostByNameQuery(@PathVariable String name) {
-        return postRepository.findByNameQuery(name).map(PostDto::new);
+        return AppUtils.daoToDto(postRepository.findByNameQuery(name));
     }
 
     @GetMapping("/name_nativequery/{name}")
     Optional<PostDto> getPostByNameNativeQuery(@PathVariable String name) {
-        return postRepository.findByNameNativeQuery(name).map(PostDto::new);
+        return AppUtils.daoToDto(postRepository.findByNameNativeQuery(name));
     }
 
     @PutMapping("name/{id}")

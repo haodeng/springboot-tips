@@ -1,36 +1,15 @@
 package demo.hao;
 
-import java.time.Instant;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
 class PostDto {
-    private final Post post;
-
-    public PostDto(Post post) {
-        this.post = post;
-    }
-
-    public Long getId() {
-        return post.getId();
-    }
-
-    public String getName() {
-        return post.getName();
-    }
-
-    public String getCategory() {
-        return post.getCategory();
-    }
-
-    public String getDescription() {
-        return getCategory() + ":" + getName();
-    }
-
-    public Instant getCreatedDate() {
-        return post.getCreatedDate();
-    }
-
-    public Instant getLastModifiedDate() {
-        return post.getLastModifiedDate();
-    }
+    private Long id;
+    private String name;
+    private String category;
 }
 
