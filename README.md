@@ -81,3 +81,4 @@ checkout: https://github.com/haodeng/spring-security-tips
 ## Other
 * Spring retry
 * Scheduling
+* Dto and entity object conversion. Use mapstruct, checkout my "Techy notes" repository
