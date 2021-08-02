@@ -60,6 +60,9 @@ A big topic
 
 checkout: https://github.com/haodeng/spring-security-tips
 
+## Messaging
+* Amqp template with Rabbitmq
+
 ## Deploy
 * Spring Boot Executable JAR
 * "Fully Executable" Spring Boot JAR
