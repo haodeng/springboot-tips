@@ -20,6 +20,7 @@
         <module>redis-demo</module>
         <module>multiple-datasources</module>
         <module>hibernate-demo</module>
+        <module>jpasteam-demo</module>
     </modules>
 
 
