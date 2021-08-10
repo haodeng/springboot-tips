@@ -66,3 +66,44 @@ Demo:
 
 ## Reactive MongoDb
 checkout: https://github.com/haodeng/spring-reactive-mongo-crud
+
+## Detect blocking code
+Java agent to detect blocking calls from non-blocking threads.
+
+Use blockhound in dev
+
+        <dependency>
+		    <groupId>io.projectreactor.tools</groupId>
+		    <artifactId>blockhound</artifactId>
+		    <version>1.0.6.RELEASE</version>
+		</dependency>
+		
+		static {
+                BlockHound.install();
+        }
+        
+Demo:
+
+    curl http://localhost:8080/bad/example1
+    2021-08-10 22:38:02.209 ERROR 19686 --- [ctor-http-nio-5] a.w.r.e.AbstractErrorWebExceptionHandler : [7954e591-1]  500 Server Error for HTTP GET "/bad/example1"
+    
+    reactor.blockhound.BlockingOperationError: Blocking call! java.lang.Thread.sleep
+    	at java.lang.Thread.sleep(Thread.java) ~[na:1.8.0_211]
+    	Suppressed: reactor.core.publisher.FluxOnAssembly$OnAssemblyException: 
+    Error has been observed at the following site(s):
+    	|_ checkpoint ⇢ HTTP GET "/bad/example1" [ExceptionHandlingWebHandler]
+    	
+    	
+    curl http://localhost:8080/bad/example2
+    2021-08-10 22:37:20.285 ERROR 19686 --- [ctor-http-nio-4] a.w.r.e.AbstractErrorWebExceptionHandler : [4af28e38-1]  500 Server Error for HTTP GET "/bad/example2"
+    
+    reactor.blockhound.BlockingOperationError: Blocking call! java.lang.Thread.sleep
+    	at java.lang.Thread.sleep(Thread.java) ~[na:1.8.0_211]
+    	Suppressed: reactor.core.publisher.FluxOnAssembly$OnAssemblyException: 
+    Error has been observed at the following site(s):
+    	|_ checkpoint ⇢ Handler demo.hao.BadExamplesController#getGreeting_blocking() [DispatcherHandler]
+    	|_ checkpoint ⇢ HTTP GET "/bad/example2" [ExceptionHandlingWebHandler]	
+    
+    
+    curl http://localhost:8080/bad/example3
+    Hi    	

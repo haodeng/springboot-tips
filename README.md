@@ -45,6 +45,7 @@ If interactions between the user’s browser and the backend application are non
 * WebFlux
 * Reactive Data Access (via r2dbc h2)
 * Reactive MongoDb
+* How to detect blocking calls
 
 ## Testing
 * Unit testing (Controllers and Repository)
