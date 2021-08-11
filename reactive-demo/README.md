@@ -106,4 +106,28 @@ Demo:
     
     
     curl http://localhost:8080/bad/example3
-    Hi    	
+    Hi    
+    
+    curl http://localhost:8080/bad/example4
+    2021-08-11 09:41:47.260 ERROR 68146 --- [ctor-http-nio-3] a.w.r.e.AbstractErrorWebExceptionHandler : [f53c89c5-1]  500 Server Error for HTTP GET "/bad/example4"
+    
+    reactor.blockhound.BlockingOperationError: Blocking call! java.lang.Thread.sleep
+    	at java.lang.Thread.sleep(Thread.java) ~[na:1.8.0_211]
+    	Suppressed: reactor.core.publisher.FluxOnAssembly$OnAssemblyException: 
+    Error has been observed at the following site(s):
+    	|_ checkpoint ⇢ HTTP GET "/bad/example4" [ExceptionHandlingWebHandler]
+    Stack trace:
+    		at java.lang.Thread.sleep(Thread.java) ~[na:1.8.0_211]
+    		at demo.hao.BadExamplesController.getGreeting_stillBlocking(BadExamplesController.java:58) ~[classes/:na]
+    		at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:1.8.0_211]
+    		at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) ~[na:1.8.0_211]
+    		at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:1.8.0_211]
+    		at java.lang.reflect.Method.invoke(Method.java:498) ~[na:1.8.0_211]
+    		
+
+Fix the blocking code by:
+    
+    return Mono.fromCallable(blockingService::getGreeting)
+                    // properly schedule above blocking call on
+                    // scheduler meant for blocking tasks
+                    .subscribeOn(Schedulers.boundedElastic());	

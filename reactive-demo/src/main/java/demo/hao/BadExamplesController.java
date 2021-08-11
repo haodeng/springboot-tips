@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Schedulers;
 
+import java.util.concurrent.Callable;
+
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/bad")
@@ -48,5 +50,63 @@ public class BadExamplesController {
                 // properly schedule above blocking call on
                 // scheduler meant for blocking tasks
                 .subscribeOn(Schedulers.boundedElastic());
+    }
+
+    @GetMapping("example4")
+    public Mono<String> getGreeting_stillBlocking() {
+        // Danger Zone!!!
+        try {
+            // something blocking
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        return Mono.fromCallable(blockingService::getGreeting)
+                // properly schedule above blocking call on
+                // scheduler meant for blocking tasks
+                .subscribeOn(Schedulers.boundedElastic());
+    }
+
+    @GetMapping("example5")
+    public Mono<String> getGreeting_badWrapping() {
+        //wrapped blocking code to callable
+        return Mono.fromCallable(this.blockingGreeting_wrong())
+                // properly schedule above blocking call on
+                // scheduler meant for blocking tasks
+                .subscribeOn(Schedulers.boundedElastic());
+    }
+
+    private Callable<String> blockingGreeting_wrong() {
+        try {
+            // something blocking
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        return blockingService::getGreeting;
+    }
+
+    @GetMapping("example6")
+    public Mono<String> getGreeting_correctWrapping() {
+        //wrapped blocking code to callable
+        return Mono.fromCallable(this.blockingGreeting_correct())
+                // properly schedule above blocking call on
+                // scheduler meant for blocking tasks
+                .subscribeOn(Schedulers.boundedElastic());
+    }
+
+    private Callable<String> blockingGreeting_correct() {
+        return () -> {
+            try {
+                // something blocking
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            return blockingService.getGreeting();
+        };
     }
 }
