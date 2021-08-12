@@ -8,7 +8,10 @@ Thats where Spring Boot Developer Tools comes into picture.
     	<groupId>org.springframework.boot</groupId>
     	<artifactId>spring-boot-devtools</artifactId>
     	<scope>runtime</scope>
+    	<optional>true</optional> 
     </dependency>
+    
+    Use optional dependency so it doesn't end up in the prod code.
     
 These folders will not trigger reload by default
 
@@ -28,7 +31,7 @@ and folders to exclude.
 
 Demo
     
-    # changes to properties will trigger a reload
+    # changes to properties and recompile will trigger a reload
     spring.devtools.restart.exclude=resources/**
 
 Change greeting.name to hao deng
@@ -36,4 +39,4 @@ Change greeting.name to hao deng
     curl http://localhost:8080/test
     It should return hao deng
 
-Change the controller, re curl, changes should also be reloaded.
+Change the controller and recompile, re curl, changes should also be reloaded.
