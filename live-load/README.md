@@ -29,6 +29,10 @@ and folders to exclude.
 
     spring.devtools.restart.exclude=resources/**,public/** 
 
+It’s also possible to disable server restarts:
+
+    spring.devtools.restart.enabled=false
+    
 Demo
     
     # changes to properties and recompile will trigger a reload
