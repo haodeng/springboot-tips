@@ -11,6 +11,11 @@ Run
 
     java -jar ./target/deploy-demo-1.0-SNAPSHOT.jar
     
+    # with prod profile
+    java -jar -Dspring.profiles.active=prod deploy-demo-1.0-SNAPSHOT.jar
+    # or
+    java -jar deploy-demo-1.0-SNAPSHOT.jar --spring.profiles.active=prod
+    
     
 ## "Fully Executable" Spring Boot JAR
 Set executable true
@@ -32,6 +37,9 @@ Set executable true
 Run
 
     ./target/deploy-demo-1.0-SNAPSHOT.jar
+    
+    # with prod profile
+    ./target/deploy-demo-1.0-SNAPSHOT.jar --spring.profiles.active=prod
 
 # Deploying Spring Boot Applications to Containers
 ## Build via IDE
@@ -79,6 +87,9 @@ Build
 Run and check:
 
     docker run --name deploy-demo -p8080:8080 haodeng/deploy-demo:latest
+    
+    # run with prod profile
+    docker run -e spring.profiles.active=prod --name deploy-demo -p8080:8080 haodeng/deploy-demo:latest
     
     curl http://localhost:8080/posts
 
