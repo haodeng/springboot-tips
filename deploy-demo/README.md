@@ -130,3 +130,47 @@ This will only build a image to local docker
     pack inspect-image haodeng/deploy-demo:latest
     
     
+# Deploy spring native with GraalVM
+Requires the following dependencies and plugins, checkout pom-spring-native.xml
+
+        <dependency>
+            <groupId>org.springframework.experimental</groupId>
+            <artifactId>spring-native</artifactId>
+            <version>${spring-native.version}</version>
+        </dependency>
+        
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+        <configuration>
+            <image>
+                <name>haodeng/${project.artifactId}</name>
+                <builder>paketobuildpacks/builder:tiny</builder>
+                <env>
+                    <BP_NATIVE_IMAGE>true</BP_NATIVE_IMAGE>
+                </env>
+            </image>
+            ...
+            
+        <plugin>
+            <groupId>org.springframework.experimental</groupId>
+            <artifactId>spring-aot-maven-plugin</artifactId>
+            <version>${spring-native.version}</version>
+
+        <plugin>
+            <groupId>org.hibernate.orm.tooling</groupId>
+            <artifactId>hibernate-enhance-maven-plugin</artifactId>
+
+
+Build image:
+If you are using containers, on Mac, it is recommended to increase the memory allocated to Docker to at least 8G (and potentially to add more CPUs as well) since native-image compiler is a heavy process.
+
+        # took a bit long time to build, 15 mins
+        mvn -f pom-spring-native.xml spring-boot:build-image
+
+Run:
+
+    docker run --name deploy-demo-graalvm -p8080:8080 haodeng/deploy-demo-graalvm:latest
+    
+    # check the log: start took 0.141s only
+    Started TestDemoApplication in 0.141 seconds (JVM running for 0.143)
+ 
