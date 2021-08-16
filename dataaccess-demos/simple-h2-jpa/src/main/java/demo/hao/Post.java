@@ -32,6 +32,10 @@ class Post {
         this.category = category;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public Long getId() {
         return id;
     }

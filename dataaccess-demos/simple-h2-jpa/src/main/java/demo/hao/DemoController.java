@@ -152,7 +152,7 @@ class DemoController {
     @Transactional
     public void demoTransactional() {
         getPosts().stream().map(dto -> AppUtils.dtoToDao(dto)).forEach(post -> {
-            if (post.getId().equals(3)) {
+            if (post.getId().equals(3L)) {
                 throw new RuntimeException("demo batch update failed, pls ignore");
             }
 
