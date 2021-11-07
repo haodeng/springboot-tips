@@ -1,6 +1,6 @@
 package demo.hao;
 
-import com.sun.tools.javac.util.List;
+import java.util.List;
 import demo.hao.dao.PostRepository;
 import demo.hao.model.Post;
 import org.springframework.stereotype.Component;

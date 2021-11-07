@@ -1,6 +1,6 @@
 package demo.hao;
 
-import com.sun.tools.javac.util.List;
+import java.util.List;
 import io.r2dbc.spi.ConnectionFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.CommandLineRunner;

@@ -1,6 +1,6 @@
 package demo.hao;
 
-import com.sun.tools.javac.util.List;
+import java.util.List;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisOperations;
 import org.springframework.stereotype.Component;

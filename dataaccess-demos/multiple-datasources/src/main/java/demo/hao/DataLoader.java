@@ -1,6 +1,6 @@
 package demo.hao;
 
-import com.sun.tools.javac.util.List;
+import java.util.List;
 import demo.hao.dao.ds1.PostRepository;
 import demo.hao.dao.ds2.UserRepository;
 import demo.hao.model.ds1.Post;

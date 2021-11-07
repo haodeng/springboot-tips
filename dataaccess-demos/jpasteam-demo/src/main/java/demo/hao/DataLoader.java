@@ -1,6 +1,6 @@
 package demo.hao;
 
-import com.sun.tools.javac.util.List;
+import java.util.List;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
